@@ -12,3 +12,9 @@ RSpec.configure do |config|
   config.mock_with :rspec
 
 end
+
+def generate_regex_pattern(str_array)
+	pattern = '^\s*' + str_array.join('\s*') + '\s*$'
+	return Regexp.new(pattern)
+end
+

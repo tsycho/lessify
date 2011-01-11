@@ -40,7 +40,7 @@ class LessNode
 		return node
 	end
 	
-	def to_string(prefix = "", options = {})
+	def to_scss(prefix = "", options = {})
 		tab = options['tab'] || "\t"
 		print_declarations = options[:print_declarations]
 		print_declarations = true if print_declarations.nil?
@@ -51,7 +51,7 @@ class LessNode
 		else
 			str += "\n"
 			str += (prefix + tab + declarations + "\n") if (print_declarations && declarations.strip.size>0)
-			@child_nodes.each { |cnode| str += cnode.to_string(prefix + tab, options) }
+			@child_nodes.each { |cnode| str += cnode.to_scss(prefix + tab, options) }
 			str += prefix + "}\n"
 		end
 	end

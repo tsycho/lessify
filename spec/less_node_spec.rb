@@ -2,11 +2,6 @@ require 'spec_helper'
 
 describe LessNode do
 
-	def generate_regex_pattern(str_array)
-		pattern = '^\s*' + str_array.join('\s*') + '\s*$'
-		return Regexp.new(pattern)
-	end
-
 	before(:each) do
 		@node = LessNode.new("*", nil)
 		declarations = " aaa: a1; bbb: b2;   "
@@ -83,21 +78,21 @@ describe LessNode do
 	end
 
 	it "should print SCSS without declarations if print_declarations=>false" do
-		@node3.to_string("", :print_declarations => false).should match generate_regex_pattern(["node3", "{", "}"]) 
-		@node2.to_string("", :print_declarations => false).should match generate_regex_pattern(["node2", "{", "node3", "{", "}", "}"])
-		@node.to_string( "", :print_declarations => false).should match generate_regex_pattern(['\\*', "{", "node2", "{", "node3", "{", "}", "}", "}"])
+		@node3.to_scss("", :print_declarations => false).should match generate_regex_pattern(["node3", "{", "}"]) 
+		@node2.to_scss("", :print_declarations => false).should match generate_regex_pattern(["node2", "{", "node3", "{", "}", "}"])
+		@node.to_scss( "", :print_declarations => false).should match generate_regex_pattern(['\\*', "{", "node2", "{", "node3", "{", "}", "}", "}"])
 
 		@node.selector = "node"
-		@node.to_string( "", :print_declarations => false).should match generate_regex_pattern(['node', "{", "node2", "{", "node3", "{", "}", "}", "}"])
+		@node.to_scss( "", :print_declarations => false).should match generate_regex_pattern(['node', "{", "node2", "{", "node3", "{", "}", "}", "}"])
 	end
 
 	it "should print SCSS with declarations" do
-		@node3.to_string("").should match generate_regex_pattern(["node3", "{", "aaa: a1;", "bbb: b2;", "ccc: c3;", "}"]) 
-		@node2.to_string("").should match generate_regex_pattern(["node2", "{", "aaa: a1;", "bbb: b2;", "node3", "{", "aaa: a1;", "bbb: b2;", "ccc: c3;", "}", "}"]) 
+		@node3.to_scss("").should match generate_regex_pattern(["node3", "{", "aaa: a1;", "bbb: b2;", "ccc: c3;", "}"]) 
+		@node2.to_scss("").should match generate_regex_pattern(["node2", "{", "aaa: a1;", "bbb: b2;", "node3", "{", "aaa: a1;", "bbb: b2;", "ccc: c3;", "}", "}"]) 
 	end
 
 	it "should print SCSS with prefix" do
-		@node3.to_string("--", :print_declarations => false).should match generate_regex_pattern(["--node3", "{", "}"]) 
-		@node3.to_string("--").should match generate_regex_pattern(["--node3", "{", "--", "aaa: a1;", "bbb: b2;", "ccc: c3;", "--}"]) 
+		@node3.to_scss("--", :print_declarations => false).should match generate_regex_pattern(["--node3", "{", "}"]) 
+		@node3.to_scss("--").should match generate_regex_pattern(["--node3", "{", "--", "aaa: a1;", "bbb: b2;", "ccc: c3;", "--}"]) 
 	end
 end
