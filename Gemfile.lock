@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lessify (0.0.1)
+    lessify (0.1)
       css_parser
 
 GEM

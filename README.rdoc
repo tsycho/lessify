@@ -1,0 +1,10 @@
+==lessify
+Gem to convert CSS files into SCSS files (LessCSS format)
+
+==Usage
+TODO
+
+==Dependencies
+* css_parser
+
+
